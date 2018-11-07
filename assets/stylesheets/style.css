@@ -72,15 +72,15 @@ nav ul li a {
 
 body {
     font-size: 16px;
-    font-family: "Muli", "Gill Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Gill Sans", "Helvetica Neue", "Archivo Narrow",  Helvetica, Arial, Archivo;
 }
 
 text{
-    font-family: "Muli", "Gill Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !IMPORTANT;
+    font-family: "Gill Sans", "Helvetica Neue", "Archivo Narrow",  Helvetica, Arial, Archivo !IMPORTANT;
 }
 
 label{
-  font-family: "Archivo Narrow", Archivo Narrow, sans-serif !IMPORTANT;
+  font-family: "Gill Sans", "Helvetica Neue", "Archivo Narrow",  Helvetica, Arial, Archivo !IMPORTANT;
      border-radius: 24px !IMPORTANT;
 }
 
