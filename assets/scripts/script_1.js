@@ -228,3 +228,18 @@ function donutChart() {
         colour = value;
         return chart;
     };
+
+    chart.variable = function(value) {
+        if (!arguments.length) return variable;
+        variable = value;
+        return chart;
+    };
+
+    chart.category = function(value) {
+        if (!arguments.length) return category;
+        category = value;
+        return chart;
+    };
+
+    return chart;
+}
