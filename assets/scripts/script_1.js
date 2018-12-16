@@ -85,6 +85,16 @@ function donutChart() {
                     d:arc,
                     fill:fillFunction
                 })
+            
+            path.transition()
+                .duration(1000)
+                .attrTween('d', function(d) {
+                    var interpolate = d3.interpolate({startAngle: 0, endAngle: 0}, d);
+                    return function(t) {
+                        return arc(interpolate(t));
+                    };
+                });
+    };
                 
             // ===========================================================================================
 
