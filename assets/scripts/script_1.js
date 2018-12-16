@@ -58,10 +58,13 @@ function donutChart() {
             // ===========================================================================================
             // append the pieChartSVG object to the selection
             var pieChartSVG = selection
+                .append("svg")
                 .attr('width', width + margin.left + margin.right)
                 .attr('height', height + margin.top + margin.bottom)
+            class:'shadow'
               .append('g')
                 .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+                
             // ===========================================================================================
 
             // ===========================================================================================
@@ -73,12 +76,16 @@ function donutChart() {
 
             // ===========================================================================================
             // add and colour the donut slices
-            var path = pieChartSVG.select('.slices')
+            var path = pieChartSVG.selectAll('.slices'+className)
                 .datum(data).selectAll('path')
-                .data(pie)
+                .data(pie(dataset))
               .enter().append('path')
-                .attr('fill', function(d) { return colour(d.data[category]); })
-                .attr('d', arc);
+                .attr({
+                    class:className,
+                    d:arc,
+                    fill:fillFunction
+                })
+                
             // ===========================================================================================
 
             // ===========================================================================================
