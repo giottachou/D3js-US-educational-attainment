@@ -17,9 +17,9 @@ var donut = donutChart()
     });
 
 function donutChart() {
-    var width,
-        height,
-        margin = {top: 10, right: 10, bottom: 10, left: 10},
+    var width=300,
+    var height=300,
+    var margin = {top: 10, right: 10, bottom: 10, left: 10},
         colour = d3.scaleOrdinal().range(["#ac3579", "#A26082", "#BDA59A", "#B4FBD3", "#E2FB3E", "#FFC5FF", "#FFD000"]), // colour scheme
         variable, // value in data that will dictate proportions on chart
         category, // compare data by
@@ -27,6 +27,11 @@ function donutChart() {
         floatFormat = d3.format('.4r'),
         cornerRadius, // sets how rounded the corners are on each slice
         percentFormat = d3.format(',.1%');
+        
+        var pie=d3.layout.pie()
+            .value(function(d){return d.count})
+            .sort(null);
+
 
     function chart(selection){
         selection.each(function(data) {
@@ -44,10 +49,13 @@ function donutChart() {
             // contructs and arc generator. This will be used for the donut. The difference between outer and inner
             // radius will dictate the thickness of the donut
             var arc = d3.arc()
-                .outerRadius(radius * 0.8)
-                .innerRadius(radius * 0.6)
+                .outerRadius(width / 2)
+                .innerRadius(100)
                 .cornerRadius(cornerRadius)
                 .padAngle(padAngle);
+                .shadowWidth(10);
+                var outerRadiusArcShadow=innerRadiusArc+1;
+                var innerRadiusArcShadow=innerRadiusArc-shadowWidth;
 
             // this arc is used for aligning the text labels
             var outerArc = d3.arc()
