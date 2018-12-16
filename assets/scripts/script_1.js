@@ -17,9 +17,9 @@ var donut = donutChart()
     });
 
 function donutChart() {
-    var width=300,
-    var height=300,
-    var margin = {top: 10, right: 10, bottom: 10, left: 10},
+    var width,
+        height,
+        margin = {top: 10, right: 10, bottom: 10, left: 10},
         colour = d3.scaleOrdinal().range(["#ac3579", "#A26082", "#BDA59A", "#B4FBD3", "#E2FB3E", "#FFC5FF", "#FFD000"]), // colour scheme
         variable, // value in data that will dictate proportions on chart
         category, // compare data by
@@ -27,11 +27,6 @@ function donutChart() {
         floatFormat = d3.format('.4r'),
         cornerRadius, // sets how rounded the corners are on each slice
         percentFormat = d3.format(',.1%');
-        
-        var pie=d3.layout.pie()
-            .value(function(d){return d.count})
-            .sort(null);
-
 
     function chart(selection){
         selection.each(function(data) {
@@ -49,13 +44,10 @@ function donutChart() {
             // contructs and arc generator. This will be used for the donut. The difference between outer and inner
             // radius will dictate the thickness of the donut
             var arc = d3.arc()
-                .outerRadius(width / 2)
-                .innerRadius(100)
+                .outerRadius(radius * 0.8)
+                .innerRadius(radius * 0.6)
                 .cornerRadius(cornerRadius)
                 .padAngle(padAngle);
-                .shadowWidth(10);
-                var outerRadiusArcShadow=innerRadiusArc+1;
-                var innerRadiusArcShadow=innerRadiusArc-shadowWidth;
 
             // this arc is used for aligning the text labels
             var outerArc = d3.arc()
@@ -66,13 +58,10 @@ function donutChart() {
             // ===========================================================================================
             // append the pieChartSVG object to the selection
             var pieChartSVG = selection
-                .append("svg")
                 .attr('width', width + margin.left + margin.right)
                 .attr('height', height + margin.top + margin.bottom)
-            class:'shadow'
               .append('g')
                 .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-                
             // ===========================================================================================
 
             // ===========================================================================================
@@ -84,26 +73,12 @@ function donutChart() {
 
             // ===========================================================================================
             // add and colour the donut slices
-            var path = pieChartSVG.selectAll('.slices'+className)
+            var path = pieChartSVG.select('.slices')
                 .datum(data).selectAll('path')
-                .data(pie(dataset))
+                .data(pie)
               .enter().append('path')
-                .attr({
-                    class:className,
-                    d:arc,
-                    fill:fillFunction
-                })
-            
-            path.transition()
-                .duration(1000)
-                .attrTween('d', function(d) {
-                    var interpolate = d3.interpolate({startAngle: 0, endAngle: 0}, d);
-                    return function(t) {
-                        return arc(interpolate(t));
-                    };
-                });
-    };
-                
+                .attr('fill', function(d) { return colour(d.data[category]); })
+                .attr('d', arc);
             // ===========================================================================================
 
             // ===========================================================================================
